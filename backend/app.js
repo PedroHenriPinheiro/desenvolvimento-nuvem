@@ -33,7 +33,7 @@ app.get("/cadastro:produto", function(req,res) {
 
 
 app.get("/verificar/:cpf", function(req,res) {
-    var cpf = req.query["cpf"]
+    var cpf = req.params.cpf
     
     if(cpf) {
         res.send(`Retorno da consulta do CPF ${cpf}`)
