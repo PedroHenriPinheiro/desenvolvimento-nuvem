@@ -32,7 +32,7 @@ app.get("/cadastro:produto", function(req,res) {
 })
 
 
-app.get("/verificar:cpf", function(req,res) {
+app.get("/verificar/:cpf", function(req,res) {
     var cpf = req.query["cpf"]
     
     if(cpf) {
