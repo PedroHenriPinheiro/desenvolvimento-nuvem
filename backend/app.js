@@ -10,11 +10,15 @@ app.listen(4000, function(erro){
 })
 
 app.get("/", function(req,res) {
-    res.send("Bem vindo!!")
+    res.send("Hello my dear Americo!!!!")
 })
 
 app.get("/produtos", function(req,res) {
     res.send("Um bocado de produtos")
+})
+
+app.get("/trem", function(req,res) {
+    res.send("Piui tchatchatcha")
 })
 
 app.get("/consulta:parametro", function(req,res) {
@@ -34,6 +38,16 @@ app.get("/cadastro:produto", function(req,res) {
 
 app.get("/verificar/:cpf", function(req,res) {
     var cpf = req.params.cpf
+    
+    if(cpf) {
+        res.send(`Retorno da consulta do CPF ${cpf}`)
+    } else {
+        res.send("CPF não foi fornecido")
+    }
+})
+
+app.get("/verificar/:cpf", function(req,res) {
+    var cpf = req.query["cpf"]
     
     if(cpf) {
         res.send(`Retorno da consulta do CPF ${cpf}`)
