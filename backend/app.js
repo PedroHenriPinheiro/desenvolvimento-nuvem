@@ -17,6 +17,10 @@ app.get("/produtos", function(req,res) {
     res.send("Um bocado de produtos")
 })
 
+app.get("/sobre", function(req,res) {
+    res.send("teste de aplicação no vercel e aws")
+})
+
 app.get("/trem", function(req,res) {
     res.send("Piui tchatchatcha")
 })
