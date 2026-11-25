@@ -1,5 +1,5 @@
 
-const API_URL = "http://56.125.31.106:3000/products";
+const API_URL = "http://15.228.7.86:3000/products";
 
 // Elementos da página
 const productList = document.querySelector('#products');
