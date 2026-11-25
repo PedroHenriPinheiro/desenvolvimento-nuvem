@@ -1,0 +1,12 @@
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+#products li {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#products li:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
