@@ -19,10 +19,8 @@ app.use(morgan('combined'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const SUPABASE_URL =
-  process.env.SUPABASE_URL || 'https://bvrgzvjqybrwmkqaqeoj.supabase.co';
-const SUPABASE_KEY =
-  process.env.SUPABASE_KEY || 'sb_publishable_L7cl0fb5d99wVSQKa4FL2A_PNGisjXU';
+const SUPABASE_URL = process.env.SUPABASE_URL
+const SUPABASE_KEY = process.env.SUPABASE_KEY
 
 const supabase = supabaseClient.createClient(SUPABASE_URL, SUPABASE_KEY);
 
