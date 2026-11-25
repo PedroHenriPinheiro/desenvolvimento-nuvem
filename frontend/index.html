@@ -1,22 +1,27 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product CRUD</title>
+  <meta name="description" content="Sistema de gerenciamento de produtos">
+  <title>Product Manager</title>
 
-  <!-- Tailwind + DaisyUI via CDN -->
-  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet" type="text/css">
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body class="min-h-screen bg-base-200">
 
-  <!-- Navbar -->
-  <div class="navbar bg-base-100 shadow-md">
+  <!-- Navegação -->
+  <header class="navbar bg-base-100 shadow-md px-4 md:px-8">
     <div class="flex-1">
-      <span class="btn btn-ghost text-xl">📦 Product CRUD</span>
+      <a class="btn btn-ghost text-xl font-bold">
+        📦 Product Manager
+      </a>
     </div>
+
     <div class="flex-none">
       <label class="swap swap-rotate btn btn-ghost btn-circle" title="Alternar tema">
         <input type="checkbox" id="theme-toggle">
@@ -24,78 +29,246 @@
         <span class="swap-on text-xl">🌙</span>
       </label>
     </div>
-  </div>
+  </header>
 
-  <main class="container mx-auto max-w-3xl p-4 md:p-8 space-y-6">
+  <main class="container mx-auto max-w-5xl p-4 md:p-8 space-y-6">
 
-    <!-- Formulário de adicionar -->
-    <div class="card bg-base-100 shadow-xl">
-      <form id="add-product-form" class="card-body">
-        <h2 class="card-title">Adicionar produto</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-          <label class="form-control md:col-span-2">
-            <div class="label"><span class="label-text">Nome</span></div>
-            <input type="text" id="name" name="name" placeholder="Ex.: Teclado mecânico"
-                   class="input input-bordered w-full" required>
-          </label>
-          <label class="form-control">
-            <div class="label"><span class="label-text">Preço</span></div>
-            <input type="number" id="price" name="price" placeholder="0,00" step="0.01" min="0"
-                   class="input input-bordered w-full" required>
-          </label>
+    <!-- Apresentação -->
+    <section class="hero bg-base-100 rounded-box shadow-sm">
+      <div class="hero-content text-center py-8">
+        <div>
+          <h1 class="text-3xl md:text-4xl font-bold">
+            Gerenciamento de produtos
+          </h1>
+          <p class="py-3 text-base-content/60">
+            Cadastre, consulte, atualize e remova produtos.
+          </p>
+          <div class="badge badge-primary badge-outline">
+            API REST + Supabase
+          </div>
         </div>
-        <div class="card-actions justify-end mt-2">
-          <button type="submit" class="btn btn-primary">Adicionar</button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </section>
 
-    <!-- Lista de produtos -->
-    <div class="card bg-base-100 shadow-xl">
+    <!-- Cadastro -->
+    <section class="card bg-base-100 shadow-xl">
       <div class="card-body">
-        <div class="flex items-center justify-between">
-          <h2 class="card-title">Produtos</h2>
-          <span id="products-count" class="badge badge-neutral">0</span>
+        <div>
+          <h2 class="card-title text-xl">Cadastrar produto</h2>
+          <p class="text-sm text-base-content/60">
+            Preencha os dados para adicionar um novo produto.
+          </p>
         </div>
 
-        <div id="loading" class="flex justify-center py-6 hidden">
+        <form id="add-product-form" class="space-y-4">
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <label class="form-control">
+              <div class="label">
+                <span class="label-text font-semibold">Nome</span>
+              </div>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Ex.: Teclado mecânico"
+                class="input input-bordered w-full"
+                maxlength="255"
+                required
+              >
+            </label>
+
+            <label class="form-control">
+              <div class="label">
+                <span class="label-text font-semibold">Preço (R$)</span>
+              </div>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                placeholder="0,00"
+                class="input input-bordered w-full"
+                step="0.01"
+                min="0"
+                required
+              >
+            </label>
+
+          </div>
+
+          <label class="form-control">
+            <div class="label">
+              <span class="label-text font-semibold">Descrição</span>
+            </div>
+            <textarea
+              id="description"
+              name="description"
+              placeholder="Descreva as características do produto..."
+              class="textarea textarea-bordered w-full"
+              rows="3"
+              maxlength="1000"
+            ></textarea>
+          </label>
+
+          <div class="flex justify-end">
+            <button type="submit" class="btn btn-primary">
+              + Adicionar produto
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- Consulta por ID -->
+    <section class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <div>
+          <h2 class="card-title text-xl">Consultar produto por ID</h2>
+          <p class="text-sm text-base-content/60">
+            Informe o identificador para localizar um produto específico.
+          </p>
+        </div>
+
+        <form id="search-product-form" class="flex flex-col sm:flex-row gap-3">
+          <input
+            type="number"
+            id="search-id"
+            class="input input-bordered w-full"
+            placeholder="Digite o ID do produto"
+            min="1"
+            step="1"
+            required
+          >
+
+          <button type="submit" class="btn btn-secondary">
+            Consultar
+          </button>
+        </form>
+
+        <div id="search-result" class="hidden mt-3"></div>
+      </div>
+    </section>
+
+    <!-- Listagem -->
+    <section class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+
+        <div class="flex items-center justify-between gap-3">
+          <div>
+            <h2 class="card-title text-xl">Produtos cadastrados</h2>
+            <p class="text-sm text-base-content/60">
+              Gerencie os produtos armazenados no banco de dados.
+            </p>
+          </div>
+
+          <div class="badge badge-primary badge-lg">
+            <span id="products-count">0</span>&nbsp; produtos
+          </div>
+        </div>
+
+        <div id="loading" class="hidden justify-center py-8">
           <span class="loading loading-spinner loading-lg text-primary"></span>
         </div>
 
-        <div id="empty-state" class="text-center text-base-content/60 py-6 hidden">
-          Nenhum produto cadastrado ainda.
+        <div id="empty-state" class="hidden text-center py-10">
+          <div class="text-4xl mb-3">📦</div>
+          <p class="font-semibold">Nenhum produto cadastrado</p>
+          <p class="text-sm text-base-content/60">
+            Utilize o formulário acima para adicionar seu primeiro produto.
+          </p>
         </div>
 
-        <ul id="products" class="menu bg-base-100 w-full p-0 gap-2"></ul>
+        <ul id="products" class="product-list space-y-3"></ul>
+
+        <div class="flex justify-end">
+          <button id="refresh-products" class="btn btn-outline btn-sm">
+            ↻ Atualizar listagem
+          </button>
+        </div>
+
       </div>
-    </div>
+    </section>
+
   </main>
 
   <!-- Modal de edição -->
   <dialog id="update-modal" class="modal">
     <div class="modal-box">
-      <h3 class="font-bold text-lg mb-4">Editar produto</h3>
+
+      <h3 class="font-bold text-xl mb-1">Editar produto</h3>
+      <p class="text-sm text-base-content/60 mb-5">
+        Altere as informações do produto selecionado.
+      </p>
+
       <form id="update-product-form" class="space-y-4">
+
         <input type="hidden" id="update-id">
+
         <label class="form-control">
-          <div class="label"><span class="label-text">Nome</span></div>
-          <input type="text" id="update-name" class="input input-bordered w-full" required>
+          <div class="label">
+            <span class="label-text font-semibold">Nome</span>
+          </div>
+          <input
+            type="text"
+            id="update-name"
+            class="input input-bordered w-full"
+            maxlength="255"
+            required
+          >
         </label>
+
         <label class="form-control">
-          <div class="label"><span class="label-text">Preço</span></div>
-          <input type="number" id="update-price" step="0.01" min="0" class="input input-bordered w-full" required>
+          <div class="label">
+            <span class="label-text font-semibold">Preço (R$)</span>
+          </div>
+          <input
+            type="number"
+            id="update-price"
+            class="input input-bordered w-full"
+            step="0.01"
+            min="0"
+            required
+          >
         </label>
+
+        <label class="form-control">
+          <div class="label">
+            <span class="label-text font-semibold">Descrição</span>
+          </div>
+          <textarea
+            id="update-description"
+            class="textarea textarea-bordered w-full"
+            rows="3"
+            maxlength="1000"
+          ></textarea>
+        </label>
+
         <div class="modal-action">
-          <button type="button" id="update-cancel" class="btn btn-ghost">Cancelar</button>
-          <button type="submit" class="btn btn-primary">Salvar</button>
+          <button type="button" id="update-cancel" class="btn btn-ghost">
+            Cancelar
+          </button>
+
+          <button type="submit" class="btn btn-primary">
+            Salvar alterações
+          </button>
         </div>
+
       </form>
     </div>
-    <form method="dialog" class="modal-backdrop"><button>fechar</button></form>
+
+    <form method="dialog" class="modal-backdrop">
+      <button>fechar</button>
+    </form>
   </dialog>
 
-  <!-- Toasts -->
-  <div id="toast-container" class="toast toast-end"></div>
+  <!-- Notificações -->
+  <div id="toast-container" class="toast toast-end toast-bottom"></div>
+
+  <footer class="text-center text-sm text-base-content/50 py-6">
+    Product Manager · Sistema de gerenciamento de produtos
+  </footer>
 
   <script src="app.js"></script>
 </body>

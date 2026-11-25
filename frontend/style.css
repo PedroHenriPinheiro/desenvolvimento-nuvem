@@ -1,12 +1,81 @@
+
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-#products li {
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+/* Transições gerais */
+button,
+input,
+textarea,
+.product-item {
+  transition: all 0.2s ease;
 }
 
-#products li:hover {
+/* Lista de produtos */
+.product-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px;
+  border: 1px solid hsl(var(--bc) / 0.12);
+  border-radius: 12px;
+  background-color: hsl(var(--b2));
+}
+
+.product-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.product-description {
+  margin-top: 5px;
+  overflow-wrap: anywhere;
+}
+
+.product-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Formulários */
+.input:focus,
+.textarea:focus {
+  outline: 2px solid hsl(var(--p) / 0.35);
+  outline-offset: 1px;
+}
+
+/* Modal */
+.modal-box {
+  max-width: 520px;
+}
+
+/* Responsividade */
+@media (max-width: 640px) {
+  .product-item {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .product-actions {
+    width: 100%;
+  }
+
+  .product-actions button {
+    flex: 1;
+  }
 }
