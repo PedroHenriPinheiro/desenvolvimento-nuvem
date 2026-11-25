@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const supabaseClient = require('@supabase/supabase-js');
 const morgan = require('morgan');
