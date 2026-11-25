@@ -1,4 +1,4 @@
-const API_URL = 'http://localhost:3000/products';
+const API_URL = "http://56.125.31.106:3000";
 
 const productList = document.querySelector('#products');
 const productsCount = document.querySelector('#products-count');
